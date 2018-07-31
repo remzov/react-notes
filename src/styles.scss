@@ -1,0 +1,43 @@
+$light-color: #e7eced;
+$dark-bg-color: #60667a;
+$light-bg-color: #dfe6ff;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1325
+);
+
+div.alert {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: slide-top 0.5s ease-out both;
+}
+
+@keyframes slide-top {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-300px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+//bootstrap
+@import "~bootstrap/scss/bootstrap";
+//containers
+@import "./containers/notes/notes.scss";
+//components
+@import "./components/control/control.scss";
+@import "./components/header/header.scss";
+@import "./components/user/user.scss";
+@import "./components/favoritePool/favorite-pool.scss";
+@import "./components/nav/nav.scss";
+@import "./components/notesPool/notes-pool.scss";
+@import "./components/note/note.scss";
+

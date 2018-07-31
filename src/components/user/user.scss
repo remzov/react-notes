@@ -1,0 +1,19 @@
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        color: darken($light-color, 10%);
+        text-decoration: none;
+    }
+}
+
+.user__avatar {
+    margin-bottom: 15px;
+}
+
+.user__name {
+    color: $light-color;
+    font-size: 1.5rem;
+}

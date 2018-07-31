@@ -1,0 +1,10 @@
+.control {
+    min-height: calc(100vh - 158px);
+    box-sizing: border-box;
+    padding: 20px 0;
+    background-color: $dark-bg-color;
+}
+
+.control__user {
+    margin-bottom: 60px;
+}

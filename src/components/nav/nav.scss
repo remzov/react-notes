@@ -1,0 +1,18 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    li {
+        margin-bottom: 25px;
+    }
+    a {
+        color: $light-color;
+        font-size: 1.2rem;
+        &:hover {
+            color: darken($light-color, 10%);
+            text-decoration: none;
+        }
+    }
+}
