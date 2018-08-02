@@ -6,7 +6,7 @@ class Nav extends Component {
         return (
             <ul className="nav">
                 <li>
-                    <a href="">Notes</a>
+                    <a className="active" href="">Notes</a>
                 </li>
                 <li>
                     <a href="">Lists</a>

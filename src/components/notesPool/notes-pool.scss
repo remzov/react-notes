@@ -1,4 +1,12 @@
 .notes-pool {
+    padding: 30px;
+}
+
+.notes-pool__title {
+    margin-bottom: 30px;
+}
+
+.notes-pool__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
     grid-auto-rows: 250px;

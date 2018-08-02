@@ -1,9 +1,17 @@
- .favorite-pool {
+.favorite-pool {
+    width: 100%;
+    min-height: 250px;
+    padding: 30px;
+    background-color: $light-bg-color;
+}
+
+.favorite-pool__heading {
+    margin-bottom: 30px;
+}
+
+.favorite-pool__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
     grid-auto-rows: 250px;
     grid-gap: 40px;
-    width: 100%;
-    background-color: $light-bg-color;
 }
-

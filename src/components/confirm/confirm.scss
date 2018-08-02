@@ -1,0 +1,31 @@
+.confirm__body {
+    background-color: #fff;
+    padding: 20px 30px;
+}
+
+.confirm__close {
+    width: 25px;
+    align-self: flex-end;
+}
+
+.confirm__text {
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.confirm__control {
+    display: flex;
+    & > button {
+        margin-right: 20px;
+    }
+}
+
+.confirm__accept-btn {
+    background-color: #dfe6ff;
+    color: #212529;
+    border-color: transparent;
+    &:hover {
+        background-color: #60667a;
+        border-color: transparent;
+    }
+}

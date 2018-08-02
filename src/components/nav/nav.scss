@@ -10,6 +10,18 @@
     a {
         color: $light-color;
         font-size: 1.2rem;
+        &.active {
+            position: relative;
+            &::before {
+                content: '';
+                width: 100%;
+                height: 1px;
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                background-color: #e7eced;
+            }
+        }
         &:hover {
             color: darken($light-color, 10%);
             text-decoration: none;

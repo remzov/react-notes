@@ -1,6 +1,7 @@
 $light-color: #e7eced;
 $dark-bg-color: #60667a;
 $light-bg-color: #dfe6ff;
+$note-bg-color: #f0f0f0;
 
 $container-max-widths: (
   sm: 540px,
@@ -40,4 +41,6 @@ div.alert {
 @import "./components/nav/nav.scss";
 @import "./components/notesPool/notes-pool.scss";
 @import "./components/note/note.scss";
+@import "./components/confirm/confirm.scss";
+@import "./components/content/content.scss";
 
