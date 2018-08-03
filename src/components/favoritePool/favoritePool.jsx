@@ -8,7 +8,7 @@ class FavoritePool extends Component {
                 <h2 className="favorite-pool__heading">Favorite Notes</h2>
                 <div className="favorite-pool__grid">
                     {this.props.favoriteList.map((note) => {
-                        return <Note key={note.id} class="note note_favorite" id={note.id} title={note.title} date={note.date} />
+                        return <Note key={note.id} class="note note_favorite" id={note.id} title={note.title} date={note.date} removing={this.props.removing} showContent={this.props.showContent}/>
                     })}
                 </div>
             </div>

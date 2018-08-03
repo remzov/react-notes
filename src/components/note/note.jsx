@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 class Note extends Component {
     render() {
         return (
-            <div className={`${this.props.class} js-note`} data-id={this.props.id}>
-                <h3 className="note__title">{this.props.title}</h3>
-                <time className="note__date">{this.props.date}</time>
+            <div className={`${this.props.class} js-note`} data-id={this.props.id} data-title={this.props.title} >
+                <div className="note__body" onClick={this.props.showContent}>
+                    <h3 className="note__title">{this.props.title}</h3>
+                    <time className="note__date">{this.props.date}</time>
+                </div>
                 <button className="note__favorite js-favorite-note" type="button">
                     <svg className="note__favorite-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.222 487.222">
                         <path d="M486.554,186.811c-1.6-4.9-5.8-8.4-10.9-9.2l-152-21.6l-68.4-137.5c-2.3-4.6-7-7.5-12.1-7.5l0,0c-5.1,0-9.8,2.9-12.1,7.6
@@ -15,10 +17,9 @@ class Note extends Component {
                             c0-1.1-0.1-2.1-0.4-3.1l-26.3-150.5l109.6-107.5C486.854,197.111,488.154,191.711,486.554,186.811z M349.554,293.911
                             c-3.2,3.1-4.6,7.6-3.8,12l22.9,131.3l-118.2-61.7c-3.9-2.1-8.6-2-12.6,0l-117.8,62.4l22.1-131.5c0.7-4.4-0.7-8.8-3.9-11.9
                             l-95.6-92.8l131.9-19.6c4.4-0.7,8.2-3.4,10.1-7.4l58.6-119.7l59.4,119.4c2,4,5.8,6.7,10.2,7.4l132,18.8L349.554,293.911z"/>
-
                     </svg>
                 </button>
-                <button className="note__remove close js-remove-note" type="button">
+                <button className="note__remove close js-remove-note" type="button" onClick=        {this.props.removing}>
                     <svg className="note__remove-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 486.4 486.4">
                         <path d="M446,70H344.8V53.5c0-29.5-24-53.5-53.5-53.5h-96.2c-29.5,0-53.5,24-53.5,53.5V70H40.4c-7.5,0-13.5,6-13.5,13.5
                                 S32.9,97,40.4,97h24.4v317.2c0,39.8,32.4,72.2,72.2,72.2h212.4c39.8,0,72.2-32.4,72.2-72.2V97H446c7.5,0,13.5-6,13.5-13.5

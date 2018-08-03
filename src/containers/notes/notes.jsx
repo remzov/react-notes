@@ -4,6 +4,7 @@ import FavoritePool from '../../components/favoritePool/favoritePool';
 import NotesPool from '../../components/notesPool/notesPool';
 import Confirm from '../../components/confirm/confirm';
 import Content from '../../components/content/content';
+import Notification from '../../components/notification/notification';
 import NoteListData from '../../notes.json';
 const FavoriteListData = [];
 
@@ -12,66 +13,65 @@ class Notes extends Component {
         noteList: NoteListData,
         favoriteList: FavoriteListData,
         content: {
-            title: 'Note title',
-            date: 'Note date',
-            text: 'Note text'
+            title: '',
+            date: '',
+            text: '',
+            group: ''
+        },
+        notification: {
+            text: '',
+            visibility: false
         }
     }
 
     render() {
         return (
-            <div className="notes" onClick={event => this.noteClickHandler(event.target)}>
-                <FavoritePool favoriteList={this.state.favoriteList}/>
-                <NotesPool noteList={this.state.noteList}/>
-                <Confirm confirm={event => this.removeNote(event.target.getAttribute('data-confirm-id'), event.target.getAttribute('data-confirm-title'))}/>
-                <Content content={this.state.content}/>
+            <div className="notes" onClick={ event => this.noteClickHandler(event.target) }>
+                <FavoritePool favoriteList={ this.state.favoriteList } removing={ event => this.confirmRemoving(event.target) } showContent={ event => this.showContent(event.target) } />
+                <NotesPool noteList={ this.state.noteList } removing={ event => this.confirmRemoving(event.target) } showContent={ event => this.showContent(event.target) }/>
+                <Confirm confirm={ event => this.removeNote(event.target.getAttribute('data-confirm-id'), event.target.getAttribute('data-confirm-title')) }/>
+                <Content content={ this.state.content }/>
+                <Notification notification={ this.state.notification.text } visibility={ this.state.notification.visibility }/>
             </div>
         );
     }
 
     noteClickHandler(target) {
-        if (target.classList.contains('js-remove-note')) {
-            this.confirmRemoving(target);
-        }
         if (target.classList.contains('js-favorite-note') && target.parentNode.parentNode.parentNode.classList.contains('notes-pool')) {
             this.pickFavorite(target);
         }
         if (target.classList.contains('js-favorite-note') && target.parentNode.parentNode.parentNode.classList.contains('favorite-pool')) {
             this.unpickFavorite(target);
         }
-        if (target.classList.contains('js-note')) {
-            this.fillContent(target);
-        }
     }
 
     confirmRemoving(target) {
-        document.querySelector('.js-confirm-btn').setAttribute('data-confirm-id', target.parentNode.getAttribute('data-id'))
-        document.querySelector('.js-confirm-btn').setAttribute('data-confirm-title', target.parentNode.querySelector('.note__title').textContent);
-        $('.confirm').modal('show');
+        return new Promise((resolve) => {
+            document.querySelector('.js-confirm-btn').setAttribute('data-confirm-id', target.parentNode.getAttribute('data-id'));
+            document.querySelector('.js-confirm-btn').setAttribute('data-confirm-title', target.parentNode.getAttribute('data-title'));
+        }).then($('.confirm').modal('show'));
     }
 
     pickFavorite(target) {
         return new Promise((resolve) => {
-            let noteTitle = target.parentNode.querySelector('.note__title').textContent;
             this.setState({
                 ...this.state,
                 favoriteList: this.state.favoriteList.concat(this.state.noteList.find(note => note.id === target.parentNode.getAttribute('data-id'))),
                 noteList: this.state.noteList.filter(note => note.id !== target.parentNode.getAttribute('data-id'))
             })
-            resolve(noteTitle);
-        }).then((noteTitle) => this.showNotification(noteTitle, 'ADDED_TO_FAVORITE'))
+            resolve(target.parentNode.getAttribute('data-title'));
+        }).then((noteTitle) => this.showNotification(noteTitle, 'was added to favorites!'))
     }
 
     unpickFavorite(target) {
         return new Promise((resolve) => {
-            let noteTitle = target.parentNode.querySelector('.note__title').textContent;
             this.setState({
                 ...this.state,
                 favoriteList: this.state.favoriteList.filter(note => note.id !== target.parentNode.getAttribute('data-id')),
                 noteList: this.state.noteList.concat(this.state.favoriteList.filter(note => note.id === target.parentNode.getAttribute('data-id')))
             })
-            resolve(noteTitle);
-        }).then((noteTitle) => this.showNotification(noteTitle, 'REMOVED_FROM_FAVORITE'))
+            resolve(target.parentNode.getAttribute('data-title'));
+        }).then((noteTitle) => this.showNotification(noteTitle, 'was removed from favorites!'))
     }
 
     removeNote(id, title) {
@@ -83,47 +83,51 @@ class Notes extends Component {
             })
             $('.confirm').modal('hide');
             resolve(title);
-        }).then((title) => this.showNotification(title, 'REMOVED'))
+        }).then((title) => this.showNotification(title, 'was removed!'))
     }
 
-    showNotification(title, type) {
-        let alert = document.createElement('div');
-        let alertText = '';
-        alert.classList.add('alert', 'alert-info');
-        switch (type) {
-            case 'REMOVED': 
-                alertText = 'was removed!';
-                break;
-            case 'ADDED_TO_FAVORITE':
-                alertText = 'was added to favorites!';
-                break;
-            case 'REMOVED_FROM_FAVORITE':
-                alertText = 'was removed from favorites!';
-                break;
-            default: break;
-        }
-        alert.textContent = `"${title}" ${alertText}`;
-        document.body.appendChild(alert) 
-        setTimeout(() => {
-            document.body.removeChild(alert) 
-        }, 3000)
+    showNotification(object, action) {
+        return new Promise(() => {
+            this.setState({
+                ...this.state,
+                notification: {
+                    text: `"${object}" ${action}`,
+                    visibility: true
+                } 
+            });
+        }).then(this.removeNotification(3000))
+       
     }
     
-    fillContent(target) {
-        let noteContent = this.state.noteList.find(note => note.id === target.getAttribute('data-id'));
-        if (!noteContent) {
-            noteContent = this.state.favoriteList.find(note => note.id === target.getAttribute('data-id'));
-        }
-        if (!noteContent) throw new Error('There is no such note!');
-        this.setState({
-            ...this.state,
-            content : {
-                title: noteContent.title,
-                date: noteContent.date,
-                text: noteContent.text
+    removeNotification(timer) {
+        setTimeout(() => {
+                this.setState({
+                    ...this.state,
+                    notification: {
+                        ...this.state.notification,
+                        visibility: false
+                    } 
+                })
+            }, timer
+        )
+    }
+
+    showContent(target) {
+        return new Promise(() => {
+            let noteContent = this.state.noteList.find(note => note.id === target.parentNode.getAttribute('data-id'));
+            if (!noteContent) {
+                noteContent = this.state.favoriteList.find(note => note.id === target.parentNode.getAttribute('data-id'));
             }
-        })
-        $('.content').modal('show');
+            if (!noteContent) throw new Error('There is no such note!');
+            this.setState({
+                ...this.state,
+                content : {
+                    title: noteContent.title,
+                    date: noteContent.date,
+                    text: noteContent.text
+                }
+            })
+        }).then($('.content').modal('show'));
     }
 }
 

@@ -10,24 +10,6 @@ $container-max-widths: (
   xl: 1325
 );
 
-div.alert {
-  position: fixed;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: slide-top 0.5s ease-out both;
-}
-
-@keyframes slide-top {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-300px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
 
 //bootstrap
 @import "~bootstrap/scss/bootstrap";
@@ -43,4 +25,5 @@ div.alert {
 @import "./components/note/note.scss";
 @import "./components/confirm/confirm.scss";
 @import "./components/content/content.scss";
+@import "./components/notification/notification.scss";
 
