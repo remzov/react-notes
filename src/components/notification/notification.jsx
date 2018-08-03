@@ -12,8 +12,8 @@ class Notification extends Component {
 }
 
 Notification.propTypes = {
-    // removing: PropTypes.func,
-    // noteList:  PropTypes.array
+    visibility:  PropTypes.bool,
+    notification:  PropTypes.string
 };
 
 export default Notification;
