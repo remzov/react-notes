@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Note extends Component {
     render() {
@@ -20,5 +21,9 @@ class Note extends Component {
         );
     }
 }
+
+Note.propTypes = {
+    confirm: PropTypes.func
+};
 
 export default Note;

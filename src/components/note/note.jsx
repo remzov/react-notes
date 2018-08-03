@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 class Note extends Component {
     render() {
         return (
-            <div className={`${this.props.class} js-note`} data-id={this.props.id} data-title={this.props.title} >
+            <div className={`${this.props.class} js-note`} data-id={this.props.noteData.id} data-title={this.props.noteData.title} data-favorite={this.props.noteData.favorite}>
                 <div className="note__body" onClick={this.props.showContent}>
-                    <h3 className="note__title">{this.props.title}</h3>
-                    <time className="note__date">{this.props.date}</time>
+                    <h3 className="note__title">{this.props.noteData.title}</h3>
+                    <time className="note__date">{this.props.noteData.date}</time>
                 </div>
-                <button className="note__favorite js-favorite-note" type="button">
+                <button className="note__favorite js-favorite-note" type="button" onClick={this.props.toggleFavor}>
                     <svg className="note__favorite-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.222 487.222">
                         <path d="M486.554,186.811c-1.6-4.9-5.8-8.4-10.9-9.2l-152-21.6l-68.4-137.5c-2.3-4.6-7-7.5-12.1-7.5l0,0c-5.1,0-9.8,2.9-12.1,7.6
                             l-67.5,137.9l-152,22.6c-5.1,0.8-9.3,4.3-10.9,9.2s-0.2,10.3,3.5,13.8l110.3,106.9l-25.5,151.4c-0.9,5.1,1.2,10.2,5.4,13.2
@@ -39,10 +39,9 @@ class Note extends Component {
 }
 
 Note.propTypes = {
-    id: PropTypes.string,
-    title: PropTypes.string,
-    date: PropTypes.string
-
+    noteData: PropTypes.object,
+    class:  PropTypes.string,
+    showContent: PropTypes.func
 };
 
 export default Note;
